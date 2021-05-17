@@ -1,0 +1,11 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+exercise_gamification/__pycache__/
+outwork/__pycache__/
+outwork/migrations/__pycache__/
+exercise_gamification/local_settings.py
+*.sqlite3
+venv
+.idea

@@ -1,0 +1,47 @@
+{% load socialaccount %}
+{% load account %}
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top mb-5">
+    <a class="navbar-brand" href="{% url 'index' %}">Outwork</a>
+    <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'leadership_board_cals' %}">Leaderboard</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'user_list' %}">Find Users</a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Add Workout
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'running' %}">Running</a>
+                <a class="dropdown-item" href="{% url 'lifting' %}">Lifting</a>
+                <a class="dropdown-item" href="{% url 'other' %}">Other Workout</a>
+            </div>
+        </li>
+
+        <li class="nav-item dropdown mr-5">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                &emsp;{{ user.first_name }}'s Account
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'profile' user.username %}">My Profile</a>
+                <a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Profile</a>
+                <a class="dropdown-item" href="{% url 'edit_workouts_and_followers' %}">Edit Workouts/Followers</a>
+                <a class="dropdown-item" href="{% provider_login_url 'google' action='reauthenticate' %}">Switch Account</a>
+                <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
+            </div>
+        </li>
+
+        {% else %}
+        <li class="nav-item">
+            <a class = "nav-link" href="{% provider_login_url 'google' %}">&emsp;Login with Google</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>

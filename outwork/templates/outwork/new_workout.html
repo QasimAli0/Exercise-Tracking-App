@@ -1,0 +1,64 @@
+{% load socialaccount %}
+{% load account %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- Required meta tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<style>
+		.navbar-nav {
+			margin-left: auto;
+		}
+		body{background-color: antiquewhite;}
+	</style>
+	<title>Outwork Workout</title>
+</head>
+<body>
+
+	{% include 'outwork/navbar.html' %}<br><br>
+	<div class="container my-5">
+	<div class="card my-5 border-dark" style="margin-top:30px; width:100%; background-color: white;">
+<div class="card-header bg-secondary text-white">
+	<h3 class="text-center " >Add Workout</h3>
+	</div>
+	<div class="card-body ">
+			<form method="post">
+				{% csrf_token %}
+			<p>
+				{{ workout_form.date.label_tag }} {{ workout_form.date }} <span class="text-danger">{% if workout_form.date.errors %}{{ workout_form.date.errors.0 }}{% endif %}</span><br>
+				<small>{{workout_form.date.help_text}}</small>
+			</p>
+
+			<p>{{ workout_form.calories.label_tag }} {{ workout_form.calories }} <span class="text-danger">{% if workout_form.calories.errors %}{{ workout_form.calories.errors.0 }}{% endif %}</span></p>
+			<p>{{ workout_form.length.label_tag }} {{ workout_form.length }} <span class="text-danger">{% if workout_form.length.errors %}{{ workout_form.length.errors.0 }}{% endif %}</span></p>
+			<p>{{ workout_form.distance.label_tag }} {{ workout_form.distance }}<span class="text-danger">{% if workout_form.distance.errors %}{{ workout_form.distance.errors.0 }}{% endif %}</span></p>
+			<p>{{ workout_form.sets.label_tag }} {{ workout_form.sets }} <span class="text-danger">{% if workout_form.sets.errors %}{{ workout_form.sets.errors.0 }}{% endif %}</span></p>
+			<p>{{ workout_form.reps.label_tag }} {{ workout_form.reps }} <span class="text-danger">{% if workout_form.reps.errors %}{{ workout_form.reps.errors.0 }}{% endif %}</span></p>
+			<p>{{ workout_form.weight.label_tag }} {{ workout_form.weight }} <span class="text-danger">{% if workout_form.weight.errors %}{{ workout_form.weight.errors.0 }}{% endif %}</span></p>
+			<p>{{ workout_form.notes.label_tag }} {{ workout_form.notes }}</p>
+				<input type="submit" value="Submit" class="btn btn-primary">
+			</form>
+		</div>
+	</div>
+			</div>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<!--<h1>Hello {{user.first_name}}!</h1>-->
+	<!--<h3>How was your run?</h3>-->
+	<!--<workout_form method="post">-->
+		<!--    {% csrf_token %}-->
+		<!--    {{ workout_workout_form.as_p }}-->
+		<!--    <input type="submit" value="Submit">-->
+		<!--</workout_form>-->
+
+	</body>
+	</html>

@@ -1,0 +1,192 @@
+{% load socialaccount %}
+{% load account %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- Required meta tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<style>
+		.navbar-nav {
+			margin-left: auto;
+		}
+	</style>
+	<title>Outwork Workout</title>
+</head>
+<body>
+ {% include 'outwork/navbar.html' %}
+
+
+ <div class="jumbotron jumbotron-fluid mt-5" style="background-color: antiquewhite; padding: 0">
+    <div class="container-fluid px-5" style="width:80%; background-color: white">
+        <div class="row">
+            <div class="col-md-12">
+
+                    <h1 class="display-3 mt-5">All Workouts </h1>
+                    <p class="lead"> </p>
+                    <hr class="my-4">
+
+<!--        </div>-->
+<!--          <h5 class="display-4"> All Workouts </h5>-->
+<!--      </div>-->
+
+      <div class="row">
+        <div class="col-md-8">
+
+            <div class="row">
+
+                {% if workouts %}
+                {% for workout in workouts %}
+                {% if workout.type == 'Running' %}
+                <div class="col-md-6">
+                    <div class="card my-3 border-dark">
+                        <h5 class="card-header border-dark">
+                            Running on {{ workout.date }}
+                        <a class="btn btn-danger float-right" href="{% url 'remove_workout' workout.id %}">Delete</a>
+                        </h5>
+                        <div class="card-body">
+                            <p class="card-text">
+                            Distance Traveled (mi): {{ workout.distance}}</br>
+                        Duration of Run: {{ workout.length}}</br>
+                    Calories Burned: {{ workout.calories}}</br>
+                    {% if workout.notes %}
+                    Notes: {{ workout.notes }}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="card-footer border-dark">
+                <h5>
+                    Points Gained: {{ workout.points }}
+                </h5>
+            </div>
+        </div>
+    </div>
+    {% elif workout.type == 'Weight Lifting' %}
+    <div class="col-md-6">
+        <div class="card my-3  border-dark">
+            <h5 class="card-header border-dark">
+                Weight Lifting on {{ workout.date }}
+            <a class="btn btn-danger float-right" href="{% url 'remove_workout' workout.id %}">Delete</a>
+            </h5>
+            <div class="card-body">
+                <p class="card-text">
+                Duration of Workout: {{ workout.length}}</br>
+            Sets: {{ workout.sets}}</br>
+        Reps: {{ workout.reps}}</br>
+    Weight: {{ workout.weight}}</br>
+Total Weight Lifted (lbs): {{ workout.total_weight_lifted}}</br>
+Calories Burned: {{ workout.calories}}</br>
+{% if workout.notes %}
+Notes: {{ workout.notes}}
+{% endif %}
+</p>
+</div>
+<div class="card-footer border-dark">
+    <h5>
+        Points Gained: {{ workout.points }}
+    </h5>
+</div>
+</div>
+</div>
+{% elif workout.type == 'Other' %}
+<div class="col-md-6">
+    <div class="card my-3  border-dark">
+        <h5 class="card-header border-dark">
+            Workout on {{ workout.date }}
+            <a class="btn btn-danger float-right" href="{% url 'remove_workout' workout.id %}">Delete</a>
+        </h5>
+        <div class="card-body">
+            <p class="card-text">
+            Calories Burned: {{ workout.calories}}</br>
+        Duration of Workout: {{ workout.length}}</br>
+    Distance: {{ workout.distance}}</br>
+Sets: {{ workout.sets}}</br>
+Reps: {{ workout.reps}}</br>
+Weight: {{ workout.weight}}</br>
+Total Weight Lifted (lbs): {{ workout.total_weight_lifted}}</br>
+{% if workout.notes %}
+Notes: {{ workout.notes}}
+{% endif %}
+</p>
+</div>
+<div class="card-footer border-dark">
+    <h5>
+        Points Gained: {{ workout.points }}
+    </h5>
+</div>
+</div>
+</div>
+
+{% endif %}
+{% endfor %}
+{% else %}
+<p>You have no workouts to display</p>
+{% endif %}
+
+</div>
+</div>
+<div class="col-md-4">
+    <h3>  </h3>
+    {% if playlist %}
+    <div class="card my-3 ml-5">
+        <h5 class="card-header text-center">
+            {{userdata.user.first_name}}'s Workout Playlist
+        </h5>
+        <div class="card-body">
+            <p class="card-text">
+                <ul class="list-group list-group-flush">
+                    <p class="text-center"><a class="btn btn-success" href="{{playlist.external_urls.spotify}}">{{playlist.name}}</a></p>
+                    <li class="list-group-item text-center">Description: {{playlist.description|safe}}</li>
+                </ul>
+            </p>
+        </div>
+        <div class="card-footer text-center">
+            <h5>
+                <a class="text-success text-center" href="{{playlist.owner.external_urls.spotify}}"> {{userdata.user.first_name}}'s Spotify Account</a>
+            </h5>
+        </div>
+    </div>
+
+    {% endif %}
+    <div class="card my-3 ml-5 text-center  border-primary">
+        <h5 class="card-header bg-primary text-white">
+            Who You Are Following
+        </h5>
+        <div class="card-body">
+            <p class="card-text">
+                {% if following %}
+                <ul class="list-group list-group-flush">
+                    {% for follow in following %}
+                    <li class="list-group-item text-center">
+                        <a href="{% url 'profile' follow.is_following.user.username %}"> {{ follow.is_following.user.username }}</a>
+                        <a class="btn btn-danger float-right" href="{% url 'remove_follow' follow.is_following.user.username %}">Unfollow</a>
+                    </li>
+
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-center">You are not following anyone ☹️</p>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+

@@ -1,0 +1,11 @@
+{% extends "outwork/leadership_board.html" %}
+
+{% block content %}
+    <h1>-Total Weight Lifted-</h1>
+    </br>
+    {% for tuple in leaderboard %}
+        <h3> {{tuple.0.rank}}. {{tuple.0.user.first_name}} {{tuple.0.user.last_name}} (<a href="{% url 'profile' tuple.0.user.username %}">{{tuple.0.user.username}}</a>) </h3>
+        <p> Total weight lifted: {{tuple.1}} lbs</p>
+
+    {% endfor %}
+{% endblock %}

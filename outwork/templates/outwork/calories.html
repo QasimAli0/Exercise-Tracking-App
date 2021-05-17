@@ -1,0 +1,19 @@
+{% load socialaccount %}
+{% load account %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{%if workout.user.user.is_authenticated%}
+    <P>Welcome, {{ user.first_name }}!</P>
+    <font size="12" color="black">Calories Burned: {{workout.caloriesBurned}}</font>
+{%else%}
+    <p>Must be logged in to show calories</p>
+{%endif%}
+
+</body>
+</html>
